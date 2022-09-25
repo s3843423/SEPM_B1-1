@@ -3,23 +3,89 @@
 
 <head>
   
-        <script>
-       var regex = new RegExp("(.*?)\.(csv)$");
+    <script>
+        
+function processFile() {
+    var fileSize = 0;
+    var noOfRows=0;
+    var lines;
+    //get file
+    var theFile = document.getElementById("myFile");
+    
+    
+    //regex for csv and xlsx files
+     var regex = new RegExp("(.*?)\.(csv)$");
+     var regex2 = new RegExp("(.*?)\.(xlsx)$")
+   //check if file is CSV or XLSX
+   if (regex.test(theFile.value.toLowerCase())|| regex2.test(theFile.value.toLowerCase())) {
+     //check if browser support FileReader
+        if (typeof (FileReader) != "undefined") {
+       //get table element
+        var table = document.getElementById("myTable");
+        var headerLine = "";
+        //create html5 file reader object
+        var myReader = new FileReader();
+        // call filereader. onload function
+        myReader.onload = function(e) {
+            var content = myReader.result;
+            //split csv file using "\n" for new line ( each row)
+             lines = content.split("\r");
+             //records size cannot be more than 422 
+             console.log( "line count :"+ lines.length);
+           if(lines.length<=422){
+            //loop all rows
+            for (var count = 0; count < lines.length; count++) {
+    
+                var rowContent = lines[count].split(/,(?=(?:(?:[^'"]*(?:'|")){2})*[^'"]*$)/);
+                if(count==0){
+                  
+                  //check data on each cell of the headers to check whether the column name matches exactly with the expected column name 
+                        if (rowContent[0]!='ID' || rowContent[1]!='Start time' || rowContent[2]!='Completion time'||rowContent[3]!='Email'||rowContent[4]!='Name'||rowContent[5]!='Your name  (FirstName LastName)' || rowContent[6]!='Your student ID' ||
+                        rowContent[7]!='Your workshop class'|| rowContent[8]!='"If you prefer to be in a team with particular students, list their student IDs separated by commas (max. 6 student IDs):"' || rowContent[9]!='What project option do you prefer?' || 
+                        rowContent[10]!='What technologies/languages would you prefer to use in project?'||
+                        rowContent[11]!='Timezone in which the team should preferably work'|| rowContent[12]!='Preferred week days for team work?'||rowContent[13]!='Preferred day/night times for team-work'){
 
-function triggerValidation(el) {
-  if (!(regex.test(el.value.toLowerCase()))) {
-    el.value = '';
-    alert('Please select  thecorrect file format');
+alert("Header names do not exactly match hence the file cannot be used for team generation, please upload a new file with proper headers"); 
+
+  }
+  else {
+    alert(" File uploaded successfully in the correct format ");
   }
 }
-        </script>
+    
+              
+                
+            }
+        }
+        else{
+            alert("record size can be maximum 422"); 
+        }
+    }
+         //call file reader onload
+
+          myReader.readAsText(theFile.files[0]);
+        //   console.log(lines.length);
+        }
+        else 
+        {
+              alert("This browser does not support HTML5.");
+        }
+        
+    }
+    else {
+                alert("Please upload a valid CSV file.");
+    }
+    return false;
+}
+
+</script>
   
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Creation Tool</title>
 
-    <link rel="stylesheet" href="styles/index.css" />
+    <!-- <link rel="stylesheet" href="styles/index.css" /> -->
 
     <!-- Bootstrap CSS-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -56,15 +122,12 @@ function triggerValidation(el) {
         <div> 
         
              
-            <form action=" ">
-                <br>
-                <label for="img">Select image:</label>
-                <input type="file" id="img" name="img" accept=".csv"  onchange='triggerValidation(this)'>
-    
-           
-                <br>
-                <input type="submit">
-            </form>        
+            <input type="file" accept=".csv,.xlsx" id="myFile">
+            <br>
+            <button onclick='processFile()'>Submit</button>
+
+       
+        
         </div>
 
         <!-- <div class="footer p-4 bg-warning">
