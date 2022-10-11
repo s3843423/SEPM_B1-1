@@ -41,7 +41,7 @@
 
                                     //check data on each cell of the headers to check whether the column name matches exactly with the expected column name 
                                     if (rowContent[0] != 'ID' || rowContent[1] != 'Start time' || rowContent[2] != 'Completion time' || rowContent[3] != 'Email' || rowContent[4] != 'Name' || rowContent[5] != 'Your name  (FirstName LastName)' || rowContent[6] != 'Your student ID' ||
-                                        rowContent[7] != 'Your workshop class' || rowContent[8] != '"If you prefer to be in a team with particular students, list their student IDs separated by commas (max. 6 student IDs):"' || rowContent[9] != 'What project option do you prefer?' ||
+                                        rowContent[7] != 'Your workshop class' || rowContent[8] != '"If you prefer to be in a team with particular students, table their student IDs separated by commas (max. 6 student IDs):"' || rowContent[9] != 'What project option do you prefer?' ||
                                         rowContent[10] != 'What technologies/languages would you prefer to use in project?' ||
                                         rowContent[11] != 'Timezone in which the team should preferably work' || rowContent[12] != 'Preferred week days for team work?' || rowContent[13] != 'Preferred day/night times for team-work') {
 
@@ -65,6 +65,10 @@
 
                     myReader.readAsText(theFile.files[0]);
                     //   console.log(lines.length);
+
+
+
+
                 }
                 else {
                     alert("This browser does not support HTML5.");
@@ -76,7 +80,56 @@
                 alert("Please upload a valid CSV file.");
             }
             return false;
-        }
+
+            function sortTeams() {
+                var table, i, switching, b, shouldSwitch, dir, switchcount = 0;
+                switching = true;
+                // Set the sorting direction to ascending:
+                dir = "asc";
+                // Make a loop that will continue until no switching has been done:
+                while (switching) {
+                    // Start by saying: no switching is done:
+                    switching = false;
+                    b = table.getElementsByid(rowContent[7]);
+                    // Loop through all table-items:
+                    for (i = 0; i < (b.length - 1); i++) {
+                        // Start by saying there should be no switching:
+                        shouldSwitch = false;
+                        /* Check if the next item should switch place with the current item,
+                        based on the sorting direction (asc or desc): */
+                        if (dir == "asc") {
+                            if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+                                /* If next item is alphabetically lower than current item,
+                                mark as a switch and break the loop: */
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else if (dir == "desc") {
+                            if (b[i].innerHTML.toLowerCase() < b[i + 1].innerHTML.toLowerCase()) {
+                                /* If next item is alphabetically higher than current item,
+                                mark as a switch and break the loop: */
+                                shouldSwitch = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (shouldSwitch) {
+                        /* If a switch has been marked, make the switch
+                        and mark that a switch has been done: */
+                        b[i].parentNode.insertBefore(b[i + 1], b[i]);
+                        switching = true;
+                        // Each time a switch is done, increase switchcount by 1:
+                        switchcount++;
+                    } else {
+                        /* If no switching has been done AND the direction is "asc",
+                        set the direction to "desc" and run the while loop again. */
+                        if (switchcount == 0 && dir == "asc") {
+                            dir = "desc";
+                            switching = true;
+                        }
+                    }
+                }
+            }
 
     </script>
 
@@ -126,32 +179,33 @@
                 to upload properly formatted file</h3>
             <br>
 
-            <div class="text-center"><input class="form-control text-center w-25" type="file" accept=".csv,.xlsx" id="myFile">
-            <br><br>
-            <form action=" ">
-                <label for="min">Minimum value: </label>
-                <select name="min" id="min">
-                    <option value="default_min">5</option>
-                </select>
-                <label for="max">Maximum value: </label>
-                <select name="max" id="max">
-                    <option value="default_max">7</option>
-                </select>
-
+            <div class="text-center"><input class="form-control text-center w-25" type="file" accept=".csv,.xlsx"
+                    id="myFile">
                 <br><br>
+                <form action=" ">
+                    <label for="min">Minimum value: </label>
+                    <select name="min" id="min">
+                        <option value="default_min">5</option>
+                    </select>
+                    <label for="max">Maximum value: </label>
+                    <select name="max" id="max">
+                        <option value="default_max">7</option>
+                    </select>
 
-            </form>
+                    <br><br>
 
-            <button onclick='processFile()'>Submit</button>
+                </form>
+
+                <button onclick='processFile()'>Submit</button>
 
 
 
-        </div>
+            </div>
 
-        <!-- <div class="footer p-4 bg-warning">
+            <!-- <div class="footer p-4 bg-warning">
             <p></p>
         </div> -->
-    </div>
+        </div>
 
 </body>
 
