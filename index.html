@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-<script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
+    <script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
     <script>
 
         function processFile() {
@@ -20,8 +20,8 @@
             var workshop3 = new Array();
             var workshop4 = new Array();
 
-var correctfile=false;
-var correctxl=false;
+            var correctfile = false;
+            var correctxl = false;
 
 
 
@@ -89,17 +89,17 @@ var correctxl=false;
                                         rowContent[10] != 'What technologies/languages would you prefer to use in project?' ||
                                         rowContent[11] != 'Timezone in which the team should preferably work' || rowContent[12] != 'Preferred week days for team work?' || rowContent[13] != 'Preferred day/night times for team-work') {
 
-alert("Header names do not exactly match hence the file cannot be used for team generation, please upload a new file with proper headers"); 
-break;
-  }
-  else {
-    alert(" File uploaded successfully in the correct format ");
-  }
-}
-    if(count>0){
-                    idData.push(Number(rowContent[0]));
-                    nameData.push(rowContent[4]);
-//workshopNum.push(results.data[i].sWorkshop);
+                                        alert("Header names do not exactly match hence the file cannot be used for team generation, please upload a new file with proper headers");
+                                        break;
+                                    }
+                                    else {
+                                        alert(" File uploaded successfully in the correct format ");
+                                    }
+                                }
+                                if (count > 0) {
+                                    idData.push(Number(rowContent[0]));
+                                    nameData.push(rowContent[4]);
+                                    //workshopNum.push(results.data[i].sWorkshop);
 
                                     min = "5";
                                     max = "7";
@@ -241,22 +241,22 @@ break;
 
                                 alert("Header names do not exactly match hence the file cannot be used for team generation, please upload a new file with proper headers");
 
-  }
-  else {
-    alert(" File uploaded successfully in the correct format ");
-  }
-}
-if(i>0){
-    let table= document.getElementById("tbl-data");
-    count=generateTableRows(table,row);
-    if (count>34){
-        alert("record size can be maximum 422"); 
-    }
-}
-if(rowContent.length<14){
-            alert("column size must be 14"); 
-           }
-    i++;
+                            }
+                            else {
+                                alert(" File uploaded successfully in the correct format ");
+                            }
+                        }
+                        if (i > 0) {
+                            let table = document.getElementById("tbl-data");
+                            count = generateTableRows(table, row);
+                            if (count > 34) {
+                                alert("record size can be maximum 422");
+                            }
+                        }
+                        if (rowContent.length < 14) {
+                            alert("column size must be 14");
+                        }
+                        i++;
 
 
 
@@ -312,8 +312,8 @@ if(rowContent.length<14){
 
 
 // }
-</script>
-  
+    </script>
+
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -354,20 +354,19 @@ if(rowContent.length<14){
         <div class=" p-5 bg-warning">
             <!-- Heading -->
             <div id="heading" class="tool_header display-1 text-center">
-                <h1>TEAM   CREATION   TOOL</h1>
+                <h1 class="display-1">TEAM CREATION TOOL</h1>
             </div>
         </div>
 
         <div class="display-6 text-center">
 
             <br>
-            <h3 class="display-6 text-center">Click the button below to choose a CSV or XLSX file<br>
-                to upload properly formatted file</h3>
+            <h3 class="display-6 text-center">Click the button below to choose a CSV or XLSX file</h3>
             <br>
 
             <div class="text-center"><br><input class="form-control text-center" type="file" accept=".csv,.xlsx"
                     id="myFile">
-                    <table id="tbl-data"></table>
+                <table id="tbl-data"></table>
                 <br><br>
                 <form action=" ">
                     <label for="min">Minimum value: </label>
