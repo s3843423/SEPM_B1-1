@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-<script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
+    <script src="https://unpkg.com/read-excel-file@4.x/bundle/read-excel-file.min.js"></script>
     <script>
 
         function processFile() {
@@ -20,6 +20,8 @@ var workshop2=new Array();
 var workshop3=new Array();
 var workshop4=new Array();
 
+var correctfile=false;
+var correctxl=false;
 
 
 
@@ -88,13 +90,14 @@ var workshop4=new Array();
                         rowContent[11]!='Timezone in which the team should preferably work'|| rowContent[12]!='Preferred week days for team work?'||rowContent[13]!='Preferred day/night times for team-work'){
 
 alert("Header names do not exactly match hence the file cannot be used for team generation, please upload a new file with proper headers"); 
-break;
+
   }
   else {
     alert(" File uploaded successfully in the correct format ");
+    correctfile=true;
   }
 }
-    if(count>0){
+    if(count>0 && correctfile==true){
                     idData.push(Number(rowContent[0]));
                     nameData.push(rowContent[4]);
 //workshopNum.push(results.data[i].sWorkshop);
@@ -243,9 +246,10 @@ alert("Header names do not exactly match hence the file cannot be used for team 
   }
   else {
     alert(" File uploaded successfully in the correct format ");
+    correctxl=true;
   }
 }
-if(i>0){
+if(i>0 && correctxl==true){
     let table= document.getElementById("tbl-data");
     count=generateTableRows(table,row);
     if (count>34){
@@ -308,32 +312,7 @@ return false;
 }
 
 
-// function generateTableHead(table,data){
-//     let thead=  table.createTHead();
-//     let row=thead.insertRow(); 
-//     console.log("row is:",row);
-// console.log()
-//     // arr.push(1);
 
-
-//     for(let key of data)
-// {
-//     let th= document.createElement('th');
-//     text= document.createTextNode(key);
-//     console.log("text is",text);
-//       arr.push(text);
-//     th.appendChild(text);
-//     row.appendChild(th);
-
-// }  
-
-// console.log(arr);
-
-
-
-
-
-// }
 </script>
   
 
@@ -385,6 +364,7 @@ return false;
 
             <div class="text-center"><input class="form-control text-center w-25" type="file" accept=".csv,.xlsx"
                     id="myFile">
+                    <table id="tbl-data"></table>
                 <br><br>
                 <form action=" ">
                     <label for="min">Minimum value: </label>
