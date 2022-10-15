@@ -280,8 +280,7 @@
                     text = document.createTextNode(key);
                     console.log("text is", text);
                     rowContent.push(text.nodeValue);
-                    th.appendChild(text);
-                    row.appendChild(th);
+                    
 
                 }
 
@@ -291,14 +290,7 @@
 
             }
             function generateTableRows(table, data) {
-                let newRow = table.insertRow(-1);
-                data.map((row, index) => {
-                    let newCell = newRow.insertCell();
-                    let newText = document.createTextNode(row);
-                    console.log("newtezt:", newText);
-                    newCell.appendChild(newText);
-
-                });
+                
                 count = count + 1;
                 console.log(count, "is the count");
                 return count;
